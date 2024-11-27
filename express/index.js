@@ -1,6 +1,9 @@
 const express = require("express")
 const app = express()
 
+app.get('/', (req, res) => {
+    res.send('Hello')
+})
 app.get('/main', (req, res) => {
     res.send('Welcome To My Website')
 })
@@ -15,4 +18,4 @@ app.get('/ola/:nome/:profissao/:cor', (req, res) => {
 app.listen(8081, () => {
     console.log('Server Running at URL https://localhost:8081')
 })
-//listen sempre sera a ultimad
+//listen sempre sera a ultima
