@@ -9,8 +9,8 @@ const Post = sequelize.define('postagens', {
 })
 
 Post.create({
-    titulo: 'teste',
-    conteudo: 'isto é um teste'
+    titulo: 'moder',
+    conteudo: 'test in database'
 })
 
 const User = sequelize.define('user', {
