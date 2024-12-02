@@ -7,7 +7,7 @@
     "mysql2": "^3.11.4",
     "sequelize": "^6.37.5"
   },
-  "name": "minimist",
+  "name": "chalk",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {},
