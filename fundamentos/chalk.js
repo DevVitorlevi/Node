@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const nota = 10;
+const nota = 6;
 
 if (nota >= 7) {
     // Fundo escuro e texto branco garantido
