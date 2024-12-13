@@ -87,3 +87,32 @@ function criarConta() {
         console.error(err); 
     });
 }
+
+// Função Para Deposito
+
+function depositar(){
+    inquirer.prompt(
+        [
+            {name:'NomeConta',message:'Qual o Nome da Conta?'}
+        ]
+    ).then(resposta =>{
+        const NomeConta = resposta.NomeConta
+
+        if(ContaExiste(NomeConta)){
+            
+        }else{
+            depositar()
+        }
+    })
+    .catch(err=>console.log(err))
+}
+ //Verifica se a Conta existe 
+function ContaExiste(NomeConta){
+    
+    if(fs.existsSync(`contas/${NomeConta}.json`)){
+        return true;
+    }else{
+        console.log(chalk.bgRed('Esta Conta Não Existe, Tente Novamente'))
+    return false;
+    }
+}
