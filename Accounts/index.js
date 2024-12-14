@@ -155,8 +155,6 @@ function sacar() {
                 // Função para realizar a retirada da quantia da conta
                 RetirarQuantia(NomeConta, Quantia);
 
-                // Após a operação de saque, retorna ao menu de operações
-                operacao();
             }).catch(err => console.log(err)); // Trata erros na segunda entrada do usuário
         } else {
             // Caso a conta não exista, reinicia o processo de saque
@@ -230,6 +228,8 @@ function RetirarQuantia(NomeConta, Quantia) {
 
     // Exibe uma mensagem confirmando que o saque foi realizado com sucesso
     console.log(chalk.bgBlue(`Foi Sacado R$${Quantia}`));
+    // Após a operação de saque, retorna ao menu de operações
+    operacao();
 }
 
 
