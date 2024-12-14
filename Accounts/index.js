@@ -189,7 +189,9 @@ function AdicionarQuantia(NomeConta, Quantia) {
         ContaDados.saldo = Number(Quantia) + Number(ContaDados.saldo);
     
         // Salva os novos dados da conta no arquivo JSON correspondente
-        fs.writeFileSync(`contas/${NomeConta}.json`, JSON.stringify(ContaDados), err => console.log(err));
+        fs.writeFileSync(`contas/${NomeConta}.json`,
+            JSON.stringify(ContaDados),
+            err => console.log(err));
     
         // Exibe uma mensagem confirmando o depósito
         console.log(chalk.bgBlue(`Foi Depositado R$${Quantia}`));
@@ -198,7 +200,6 @@ function AdicionarQuantia(NomeConta, Quantia) {
     }
 
 }
-
 // Função para retirar uma quantia do saldo de uma conta
 function RetirarQuantia(NomeConta, Quantia) {
     // Obtém os dados da conta com base no nome fornecido
@@ -225,14 +226,11 @@ function RetirarQuantia(NomeConta, Quantia) {
         JSON.stringify(ContaDados), 
         err => console.log(err) // Trata possíveis erros ao salvar o arquivo
     );
-
     // Exibe uma mensagem confirmando que o saque foi realizado com sucesso
     console.log(chalk.bgBlue(`Foi Sacado R$${Quantia}`));
     // Após a operação de saque, retorna ao menu de operações
     operacao();
 }
-
-
 // Função para obter os dados de uma conta a partir de seu arquivo JSON
 function ObterDados(NomeConta) {
     // Lê o conteúdo do arquivo JSON da conta
@@ -244,4 +242,3 @@ function ObterDados(NomeConta) {
     // Retorna os dados da conta como um objeto JavaScript
     return JSON.parse(contaJSON);
 }
- 
