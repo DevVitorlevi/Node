@@ -61,8 +61,8 @@ function criarConta() {
             message: 'Qual o Nome Do Titular da Conta'
         }
     ])
-    .then(res => { 
-        const Nome = res.nome; 
+    .then(resposta => { 
+        const Nome = resposta.nome; 
         console.log(Nome); 
         console.log(chalk.green('Parabens, Sua Conta Foi Criada')); 
 
@@ -73,7 +73,7 @@ function criarConta() {
 
         // Verifica se já existe um arquivo para o nome fornecido
         if (fs.existsSync(`contas/${Nome}.json`)) {
-            // Se existir, avisa o usuário e reinicia o processo
+            // Se existir, avisa o usuário e reinicia o processomnm 
             console.log(chalk.red('Já Existe Uma Conta Com Este Nome, Escolha Outro'));
             console.log('================================');
             criarConta(); // Chama a função novamente para pedir um nome diferente
@@ -89,7 +89,6 @@ function criarConta() {
     });
 }
 
-// Função Para Deposito
 // Função para realizar um depósito em uma conta existente
 function depositar() {
     // Pergunta ao usuário o nome da conta
@@ -112,9 +111,6 @@ function depositar() {
 
                 // Adiciona a quantia ao saldo da conta
                 AdicionarQuantia(NomeConta, Quantia);
-
-                // Chama outra operação
-                operacao();
             }).catch(er => console.log(er)); // Tratamento de erro para a entrada da quantia
         } else {
             // Se a conta não existir, chama novamente a função para tentar outro depósito
@@ -133,7 +129,8 @@ function consultarSaldo(){
         if(ContaExiste(NomeConta)){
             const ContaDados = ObterDados(NomeConta)
             console.log(`O Seu Saldo Atual é: R$${ContaDados.saldo}`)
-        }else{
+        }
+        else{
             consultarSaldo()
         }
     operacao()
@@ -187,17 +184,21 @@ function AdicionarQuantia(NomeConta, Quantia) {
     // Verifica se a quantia é válida
     if (!Quantia) {
         console.log(chalk.bgRedBright('Ocorreu Um Erro, Tente Novamente'));
-        depositar(); // Reinicia o processo de depósito em caso de erro
+        return depositar() // Reinicia o processo de depósito em caso de erro
+    }else{
+
+        // Atualiza o saldo da conta com a quantia depositada
+        ContaDados.saldo = Number(Quantia) + Number(ContaDados.saldo);
+    
+        // Salva os novos dados da conta no arquivo JSON correspondente
+        fs.writeFileSync(`contas/${NomeConta}.json`, JSON.stringify(ContaDados), err => console.log(err));
+    
+        // Exibe uma mensagem confirmando o depósito
+        console.log(chalk.bgBlue(`Foi Depositado R$${Quantia}`));
+        // Chama outra operação
+        operacao();
     }
 
-    // Atualiza o saldo da conta com a quantia depositada
-    ContaDados.saldo = Number(Quantia) + Number(ContaDados.saldo);
-
-    // Salva os novos dados da conta no arquivo JSON correspondente
-    fs.writeFileSync(`contas/${NomeConta}.json`, JSON.stringify(ContaDados), err => console.log(err));
-
-    // Exibe uma mensagem confirmando o depósito
-    console.log(chalk.bgBlue(`Foi Depositado ${Quantia}`));
 }
 
 // Função para retirar uma quantia do saldo de uma conta
@@ -238,8 +239,9 @@ function ObterDados(NomeConta) {
     const contaJSON = fs.readFileSync(`contas/${NomeConta}.json`, {
         encoding: 'utf8', // Define a codificação como UTF-8
         flag: 'r'        // Abre o arquivo no modo de leitura
-    });
+        });
 
     // Retorna os dados da conta como um objeto JavaScript
     return JSON.parse(contaJSON);
 }
+ 
