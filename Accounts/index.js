@@ -63,7 +63,6 @@ function criarConta() {
     ])
     .then(resposta => { 
         const Nome = resposta.nome; 
-        console.log(Nome); 
         console.log(chalk.green('Parabens, Sua Conta Foi Criada')); 
 
         // Verifica se a pasta 'contas' existe; se não, cria
@@ -82,6 +81,7 @@ function criarConta() {
 
         // Cria um arquivo JSON com o nome fornecido e inicializa o saldo como 0
         fs.writeFileSync(`contas/${Nome}.json`, JSON.stringify({ nome: Nome, saldo: 0 }));
+        
 
     })
     .catch(err => { 
