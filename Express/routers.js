@@ -7,6 +7,8 @@ app.use(express.urlencoded({
     extended: true // Permite que objetos complexos sejam passados no corpo (ex: arrays, objetos aninhados)
 }));
 
+app.use(express.static('public'))
+
 // Middleware para processar requisições em JSON
 app.use(express.json());
 
@@ -30,7 +32,11 @@ app.get('/main', (req, res) => {
     res.sendFile(`${BasePath}/index.html`);
 });
 
+app.use((req,res,next)=>{
+    res.status(404).sendFile(`${BasePath}/404.html`)
+})
+
 // Inicia o servidor na porta 8080 e exibe uma mensagem no console quando o servidor está funcionando
-app.listen(8080, () => {
+app.listen(4320, () => {
     console.log('Servidor Rodando'); // Confirma que o servidor foi iniciado corretamente
 });

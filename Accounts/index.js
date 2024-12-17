@@ -6,6 +6,8 @@ const inquirer = require('inquirer');
 const fs = require('fs'); // Biblioteca para manipulação de arquivos no sistema.
 const { Console } = require('console');
 
+// Arquivos Estáticos
+
 // Função Principal
 operacao();
 
