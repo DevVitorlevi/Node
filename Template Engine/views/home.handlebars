@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Olá Handlebars</h1>
-</body>
-</html>
+<!-- Exibe uma mensagem usando os dados do objeto "user" -->
+<h1>O Usuário {{user.name}} tem {{user.age}} anos e mora em {{user.city}}</h1>
+
+<!-- Verifica se a variável "auth" é verdadeira -->
+{{#if auth}}
+    <!-- Caso o usuário esteja autenticado, exibe a mensagem abaixo -->
+    <p>
+        Você está autenticado, <a href="/dashboard">Clique aqui</a>
+    </p>
+{{else}}
+<p>VOce Náo esta autenticado</p>
+{{/if}}
