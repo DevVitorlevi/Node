@@ -4,10 +4,6 @@ const inquirer = require('inquirer');
 
 // Importação de Módulos Internos
 const fs = require('fs'); // Biblioteca para manipulação de arquivos no sistema.
-const { Console } = require('console');
-
-// Arquivos Estáticos
-
 // Função Principal
 operacao();
 
@@ -41,13 +37,12 @@ function operacao() {
 
             case 'Sair':
                 console.log(chalk.green('Saindo do Sistema...'));
-                process.exit();
-            default:
-                console.log(chalk.red('Opção Inválida!'));
-                operacao(); // Chama a função novamente caso a opção seja inválida.
+                setTimeout(()=>{
+                    process.exit()
+                },1000)
         }
     })
-    .catch(err => {
+    .ecatch(rr => {
         // Tratamento de erros em caso de falhas
         console.error(err); // Exibe o erro no console.
     }); 
@@ -220,7 +215,7 @@ function RetirarQuantia(NomeConta, Quantia) {
     }
 
     // Atualiza o saldo da conta, subtraindo a quantia solicitada
-    ContaDados.saldo = Number(ContaDados.saldo) - Number(Quantia);
+    ContaDados.saldo = Number(ContaDados.saldo) - Number(Quantia);  
 
     // Salva os novos dados da conta no arquivo JSON correspondente
     fs.writeFileSync(

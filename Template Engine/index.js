@@ -33,6 +33,16 @@ app.get('/', (req, res) => {
     res.render("home", { user: User, auth })
 })
 
+app.get('/post',(req,res)=>{
+    const post = {
+        title:'Portifolio',
+        techs:['HTML','CSS','JS','NODE.JS','MYSQL','REACT','JAVA'],
+        me:'Dev Fullstack, Técnico em Desenvolvimento de Sistemas, Formado em Ciencia da Computação'
+    }
+    res.render('Portifolio', {post})
+
+})
+
 // Configura o servidor para escutar na porta 5000
 app.listen(5000, () => {
     // Mensagem de confirmação no terminal quando o servidor está ativo
