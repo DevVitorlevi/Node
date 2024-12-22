@@ -42,7 +42,7 @@ form{
     outline: none;
     font-size: 22px;
 }
-button{
+button {
     padding: 5px;
     font-size: 15px;
     background-color: rgb(22, 144, 245);
@@ -50,23 +50,18 @@ button{
     border: 0;
     color: white;
     width: 100px;
-    margin: auto;
+    margin: 0;
     cursor: pointer;
 }
-.buttons{
+
+button a {
+    text-decoration: none;
+    color: white;
+}
+
+.buttons {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: 10px;
-
-}
-#cadastro{
-    width: 300px;
-}
-#res{
-    font-size: 30px;
-}
-
-.container button{
-    margin: 0 auto;
+    justify-content: center;
+    gap: 10px; 
 }

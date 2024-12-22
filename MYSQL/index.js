@@ -55,7 +55,7 @@ app.get('/livros',(req,res)=>{
     const consulta ='SELECT * FROM livros'
     conn.query(consulta,(err,data)=>{
         if(err){
-            Console.error('Erro ao Buscar Livros'+ err)
+            console.error('Erro ao Buscar Livros'+ err)
             return
         }
 

@@ -1,13 +1,11 @@
-<link rel="stylesheet" href="/css/livro.css">
-    <div class="box">
+<link rel="stylesheet" href="/css/livros.css">
     <h2>Livros Disponiveis</h2>
+    <div class="container">
 {{#each Livros}}
-        <main>
-            <div class="livros">
-                <p>
-                    {{this.id}} - {{this.titulo}} - {{this.paginas}}
-                </p>
+            <div>
+                
+                #{{this.id}} - <span class="bold">{{this.titulo}}</span> - {{this.paginas}}
             </div>
-        </main>
-</div>
+
 {{/each}}
+</div>
