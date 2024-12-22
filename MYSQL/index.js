@@ -1,85 +1,113 @@
-// Importa o módulo express, responsável por criar o servidor web
+// Importa o módulo express, responsável por criar e gerenciar o servidor web
 const express = require('express');
 
-// Importa o módulo express-handlebars, usado para gerenciar templates e renderizar páginas HTML
+// Importa o módulo express-handlebars, que permite o uso de templates Handlebars para renderizar páginas HTML
 const exphbs = require('express-handlebars');
 
-// Importa o módulo mysql2, utilizado para conectar e interagir com o banco de dados MySQL
+// Importa o módulo mysql2, utilizado para se conectar e interagir com o banco de dados MySQL
 const mysql = require('mysql2');
 
 // Cria uma instância da aplicação Express
 const app = express();
 
-// Configura o Handlebars como o mecanismo de renderização de views do Express
-app.engine('handlebars', exphbs.engine()); // Define o 'engine' do express como o handlebars
-app.set('view engine', 'handlebars'); // Define que o 'view engine' trabalhará com arquivos .handlebars
+// Configura o Handlebars como o motor de templates do Express
+// O 'handlebars' é o motor que renderiza os templates, usando o método engine()
+app.engine('handlebars', exphbs.engine()); // Define que a extensão '.handlebars' será usada com o Handlebars
+app.set('view engine', 'handlebars'); // Informa ao Express que usará 'handlebars' como view engine
 
-// Configura o Express para servir arquivos estáticos da pasta 'public'
-app.use(express.static('public'));
+// Configura o Express para servir arquivos estáticos (CSS, imagens, JS) da pasta 'public'
+app.use(express.static('public')); // Torna a pasta 'public' acessível para arquivos estáticos
 
-// Middleware para interpretar dados enviados no corpo da requisição em formato URL-encoded
+// Middleware que permite ao Express processar dados enviados em formato URL-encoded (ex.: de formulários)
 app.use(express.urlencoded({
-    extended: true // Permite interpretar dados aninhados (ex.: objetos ou arrays)
+    extended: true // Permite interpretar dados complexos (ex.: objetos ou arrays aninhados)
 }));
 
-// Middleware para interpretar dados enviados no corpo da requisição em formato JSON
-app.use(express.json());
+// Middleware que permite ao Express processar dados em formato JSON, caso o cliente envie dados JSON
+app.use(express.json()); 
 
-// Rota principal que renderiza a página inicial
+// Rota para a página inicial, renderiza o template 'home.handlebars'
 app.get('/', (req, res) => {
-    res.render('home'); // Renderiza a página 'home.handlebars'
+    res.render('home'); // Renderiza a página inicial usando o template 'home'
 });
 
-// Rota para inserir um livro no banco de dados
+// Rota para inserir um novo livro no banco de dados
 app.post('/livros/inserir', (req, res) => {
-    // Captura os valores enviados no formulário
+    // Captura os dados enviados pelo formulário no corpo da requisição
     const titulo = req.body.titulo; // Título do livro
     const qntpagina = req.body.paginas; // Quantidade de páginas do livro
 
     // Consulta SQL para inserir os dados na tabela 'livros'
-    const consulta = `INSERT INTO livros (titulo, paginas) VALUES (?, ?)`; // Utiliza placeholders (?) para prevenir SQL Injection
+    const consulta = `INSERT INTO livros (titulo, paginas) VALUES (?, ?)`; // Utiliza placeholders (?) para evitar SQL Injection
 
-    // Executa a consulta no banco de dados, passando os valores do formulário
+    // Executa a consulta no banco de dados, passando os valores obtidos do formulário
     conn.query(consulta, [titulo, qntpagina], (err) => {
         if (err) {
-            console.error('Erro ao inserir dados:', err.message); // Exibe o erro no console, caso ocorra
-            return
+            // Caso ocorra um erro na consulta, exibe no console
+            console.error('Erro ao inserir dados:', err.message);
+            return; // Interrompe a execução se houver erro
         } else {
-            console.log('Livro inserido com sucesso!'); // Mensagem de sucesso no console
+            // Se o livro for inserido com sucesso, exibe uma mensagem no console
+            console.log('Livro inserido com sucesso!');
         }
         res.redirect('/'); // Redireciona o usuário para a página inicial após a inserção
     });
 });
 
-app.get('/livros',(req,res)=>{
-    const consulta ='SELECT * FROM livros'
-    conn.query(consulta,(err,data)=>{
-        if(err){
-            console.error('Erro ao Buscar Livros'+ err)
-            return
+// Rota para listar todos os livros cadastrados
+app.get('/livros', (req, res) => {
+    const consulta = 'SELECT * FROM livros'; // Consulta SQL para buscar todos os livros
+
+    // Executa a consulta no banco de dados
+    conn.query(consulta, (err, data) => {
+        if (err) {
+            // Caso haja erro na consulta, exibe no console
+            console.error('Erro ao buscar livros:', err);
+            return; // Interrompe a execução se houver erro
         }
 
-        const Livros = data
+        const Livros = data; // Armazena o resultado da consulta na variável 'Livros'
 
-        res.render('livros',{Livros})
+        res.render('livros', { Livros }); // Renderiza a página 'livros.handlebars' e passa a lista de livros para o template
+    });
+});
 
-    })
-})
+// Rota para exibir os detalhes de um livro específico
+app.get('/livro/:id', (req, res) => {
+    const id = req.params.id; // Obtém o ID do livro a partir dos parâmetros da URL
+    const consulta = `SELECT * FROM livros WHERE id = ?`; // Consulta SQL para buscar um livro pelo ID
+
+    // Executa a consulta no banco de dados, passando o ID como parâmetro
+    conn.query(consulta, [id], (err, data) => {
+        if (err) {
+            // Caso ocorra um erro na consulta, exibe no console
+            console.error(err);
+            return; // Interrompe a execução se houver erro
+        }
+
+        const livro = data[0]; // Como a consulta retorna um array, pegamos o primeiro item, que é o livro encontrado
+
+        res.render('livro', { livro }); // Renderiza a página 'livro.handlebars' e passa os dados do livro para o template
+    });
+});
 
 // Cria a conexão com o banco de dados MySQL
 const conn = mysql.createConnection({
-    host: 'localhost', // Endereço do servidor do banco de dados
-    user: 'root', // Usuário para conexão (no caso, 'root')
-    password: '', // Senha do usuário (neste exemplo, está em branco)
+    host: 'localhost', // Endereço do servidor MySQL (geralmente localhost)
+    user: 'root', // Usuário do banco de dados (no caso, 'root')
+    password: '', // Senha do usuário (em branco neste caso)
     database: 'nodemysql' // Nome do banco de dados a ser utilizado
 });
 
-// Conecta ao banco de dados e inicia o servidor
+// Conecta ao banco de dados e, se a conexão for bem-sucedida, inicia o servidor
 conn.connect(() => {
     try {
         console.log('Conectado ao Banco'); // Exibe no console que a conexão foi bem-sucedida
-        app.listen(3000); // Inicia o servidor na porta 3000
+        app.listen(3000, () => { // Inicia o servidor Express na porta 3000
+            console.log('Servidor rodando na porta 3000');
+        });
     } catch (err) {
-        throw new Error(console.log(err)); // Lança um erro caso algo dê errado na conexão ou no servidor
+        // Caso ocorra algum erro ao conectar ao banco ou iniciar o servidor, exibe o erro no console
+        throw new Error(console.log(err));
     }
 });

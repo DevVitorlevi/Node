@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="/css/livros.css">
     <h2>Livros Disponiveis</h2>
     <div class="container">
+            <button type="button"><a href="/">Cadastre Um Livro</a></button>
 {{#each Livros}}
             <div>
                 
-                #{{this.id}} - <span class="bold">{{this.titulo}}</span> - {{this.paginas}}
+                <a href="/livro/{{this.id}}">#{{this.id}} - <span class="bold">{{this.titulo}}</span> - {{this.paginas}}</a>
             </div>
 
 {{/each}}
