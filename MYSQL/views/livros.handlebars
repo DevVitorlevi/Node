@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="/css/livro.css">
+    <div class="box">
+    <h2>Livros Disponiveis</h2>
+{{#each Livros}}
+        <main>
+            <div class="livros">
+                <p>
+                    {{this.id}} - {{this.titulo}} - {{this.paginas}}
+                </p>
+            </div>
+        </main>
+</div>
+{{/each}}
