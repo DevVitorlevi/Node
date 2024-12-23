@@ -91,23 +91,46 @@ app.get('/livro/:id', (req, res) => {
     });
 });
 
-app.get('/livro/edit/:id',(req,res)=>{
-    const id = req.params.id // Obtém o ID do livro a partir dos parâmetros da URL
-    const consulta = `SELECT * FROM livros WHERE id =?` // Consulta SQL para buscar um livro pelo ID
+// Rota GET para carregar o formulário de edição de um livro
+app.get('/livro/edit/:id', (req, res) => {
+    const id = req.params.id; // Obtém o ID do livro a partir dos parâmetros da URL
+    const consulta = `SELECT * FROM livros WHERE id =?`; // Consulta SQL para buscar o livro pelo ID
 
     // Executa a consulta no banco de dados, passando o ID como parâmetro
-    conn.query(consulta,[id],(err,data)=>{
-        if(err){
-            console.error(err)
-            return
+    conn.query(consulta, [id], (err, data) => {
+        if (err) {
+            console.error(err); // Loga o erro no console, caso ocorra
+            return; // Interrompe a execução em caso de erro
         }
         
-        const livro =data[0]
+        const livro = data[0]; // Obtém o primeiro (e único) resultado da consulta
 
-        res.render('edit',{livro})
-    })
+        // Renderiza a página de edição, passando o objeto `livro` como dado
+        res.render('edit', { livro });
+    });
+});
 
-})
+// Rota POST para salvar as alterações de um livro
+app.post('/livro/updatelivro', (req, res) => {
+    const id = req.body.id; // Obtém o ID do livro enviado pelo formulário
+    const titulo = req.body.titulo; // Obtém o título atualizado enviado pelo formulário
+    const qntpagina = req.body.paginas; // Obtém o número de páginas atualizado enviado pelo formulário
+
+    // Consulta SQL para atualizar o título e o número de páginas de um livro pelo ID
+    const consulta = `UPDATE livros SET titulo = ?, paginas = ? WHERE id = ?`;
+
+    // Executa a consulta no banco de dados, passando os novos valores e o ID como parâmetros
+    conn.query(consulta, [titulo, qntpagina, id], (err) => {
+        if (err) {
+            console.error('Erro ao editar livro: ' + err); // Loga o erro no console, caso ocorra
+            return; // Interrompe a execução em caso de erro
+        }
+
+        console.log('Livro editado'); // Exibe uma mensagem no console ao editar com sucesso
+        res.redirect('/livros'); // Redireciona para a lista de livros após a edição
+    });
+});
+
 
 // Cria a conexão com o banco de dados MySQL
 const conn = mysql.createConnection({

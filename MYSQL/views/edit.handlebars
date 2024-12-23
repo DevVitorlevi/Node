@@ -3,7 +3,8 @@
     <h1>Edite um Livro</h1>
 
 
-    <form action="" method="POST" id="form">
+    <form action="/livro/updatelivro" method="POST" id="form">
+        <input type="hidden" value="{{livro.id}}" name="id"><!--Um campo oculto que armazena o ID do livro, permitindo que o backend identifique qual livro está sendo editado.-->
         <div class="inputs">
             <input type="text" name="titulo" id="input" placeholder="Titulo:" value="{{livro.titulo}}">
             
