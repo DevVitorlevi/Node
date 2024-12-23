@@ -5,7 +5,8 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 
 // Importa o módulo mysql2, utilizado para se conectar e interagir com o banco de dados MySQL
-const mysql = require('mysql2');
+
+const conn = require('./db/conn.js')
 
 // Cria uma instância da aplicação Express
 const app = express();
@@ -130,25 +131,33 @@ app.post('/livro/updatelivro', (req, res) => {
         res.redirect('/livros'); // Redireciona para a lista de livros após a edição
     });
 });
+// Rota para remover um livro do banco de dados pelo ID.
+// O método HTTP POST é usado aqui, já que a operação altera o estado do servidor (remoção de dados).
+app.post('/livros/remover/:id', (req, res) => {
+    // Obtém o parâmetro `id` da URL da requisição.
+    const id = req.params.id;
 
+    // Declara a consulta SQL para remover um livro com base no ID fornecido.
+    // A utilização de um marcador `?` ajuda a evitar ataques de SQL Injection.
+    const consulta = `DELETE FROM livros WHERE id = ?`;
 
-// Cria a conexão com o banco de dados MySQL
-const conn = mysql.createConnection({
-    host: 'localhost', // Endereço do servidor MySQL (geralmente localhost)
-    user: 'root', // Usuário do banco de dados (no caso, 'root')
-    password: '', // Senha do usuário (em branco neste caso)
-    database: 'nodemysql' // Nome do banco de dados a ser utilizado
+    // Executa a consulta no banco de dados utilizando o pool de conexões.
+    conn.query(consulta, [id], (err) => {
+        if (err) {
+            // Caso ocorra um erro ao executar a consulta, ele é exibido no console.
+            console.error('Erro ao Apagar Livro: ' + err);
+            return; // Interrompe a execução do restante do código.
+        }
+
+        // Exibe uma mensagem no console indicando que o livro foi removido com sucesso.
+        console.log('Livro Apagado');
+
+        // Redireciona o usuário para a página de listagem de livros após a remoção.
+        res.redirect('/livros');
+    });
 });
 
-// Conecta ao banco de dados e, se a conexão for bem-sucedida, inicia o servidor
-conn.connect(() => {
-    try {
-        console.log('Conectado ao Banco'); // Exibe no console que a conexão foi bem-sucedida
-        app.listen(3000, () => { // Inicia o servidor Express na porta 3000
-            console.log('Servidor rodando na porta 3000');
-        });
-    } catch (err) {
-        // Caso ocorra algum erro ao conectar ao banco ou iniciar o servidor, exibe o erro no console
-        throw new Error(console.log(err));
-    }
+
+app.listen(3000, () => { // Inicia o servidor Express na porta 3000
+    console.log('Servidor rodando na porta 3000');
 });

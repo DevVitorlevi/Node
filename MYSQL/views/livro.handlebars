@@ -2,4 +2,7 @@
 <div class="book">
     <p>O {{livro.titulo}} tem {{livro.paginas}} paginas</p>
     <button><a href="/livro/edit/{{livro.id}}">editar</a></button>
+    <form action="/livros/remover/{{livro.id}}" method="POST">
+        <button type="submit">Apagar</button>
+    </form>
 </div>
