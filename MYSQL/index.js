@@ -91,6 +91,24 @@ app.get('/livro/:id', (req, res) => {
     });
 });
 
+app.get('/livro/edit/:id',(req,res)=>{
+    const id = req.params.id // Obtém o ID do livro a partir dos parâmetros da URL
+    const consulta = `SELECT * FROM livros WHERE id =?` // Consulta SQL para buscar um livro pelo ID
+
+    // Executa a consulta no banco de dados, passando o ID como parâmetro
+    conn.query(consulta,[id],(err,data)=>{
+        if(err){
+            console.error(err)
+            return
+        }
+        
+        const livro =data[0]
+
+        res.render('edit',{livro})
+    })
+
+})
+
 // Cria a conexão com o banco de dados MySQL
 const conn = mysql.createConnection({
     host: 'localhost', // Endereço do servidor MySQL (geralmente localhost)
