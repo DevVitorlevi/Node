@@ -9,12 +9,12 @@ const User = db.define('User', {
     // Define a coluna 'name' com tipo STRING (texto).
     name: {
         type: DataTypes.STRING, // Tipo de dado: String
-        required: true          // Define que é obrigatório (não é uma configuração do Sequelize; seria melhor usar `allowNull: false`).
+        required: true          // Define que é obrigatório 
     },
     // Define a coluna 'profissao' com tipo STRING (texto).
     profissao: {
         type: DataTypes.STRING, // Tipo de dado: String
-        reqired: true           // Provavelmente deveria ser `required`, mas isso não é válido no Sequelize. Use `allowNull: false`.
+        required: true          
     },
     // Define a coluna 'newsletter' com tipo BOOLEAN (verdadeiro ou falso).
     newsletter: {

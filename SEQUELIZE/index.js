@@ -8,6 +8,8 @@ const exphbs = require('express-handlebars');
 
 const conn = require('./db/conn.js')
 
+const User = require('./models/User.js')
+
 // Cria uma instância da aplicação Express
 const app = express();
 
@@ -32,6 +34,13 @@ app.get('/', (req, res) => {
     res.render('home'); // Renderiza a página inicial usando o template 'home'
 });
 
-app.listen(4000,()=>{
-    console.log("Servidor Rodando")
-})
+// Sincroniza o banco de dados usando o método `sync` do Sequelize.
+// `conn` é a conexão do Sequelize importada de '../db/conn'.
+conn.sync({ force: false }) // Garante que tabelas existentes não serão sobrescritas.
+    .then(() => {
+        app.listen(4000, () => {
+            console.log('Servidor rodando em http://localhost:4000'); // Mensagem de confirmação.
+        });
+    })
+    .catch(err => console.error('Erro ao sincronizar o banco de dados:', err)); // Mensagem de erro mais detalhada.
+
