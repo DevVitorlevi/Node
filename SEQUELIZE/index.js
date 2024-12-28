@@ -9,7 +9,8 @@ const exphbs = require('express-handlebars');
 const conn = require('./db/conn.js')
 
 const User = require('./models/User.js');
-const { where } = require('sequelize');
+const Endereço = require('./models/Endereço.js');
+
 
 // Cria uma instância da aplicação Express
 const app = express();
@@ -104,12 +105,7 @@ app.post('/user/editar', async (req, res) => {
 
     // Atualiza o registro no banco de dados.
     await User.update(
-        {
-            name: nome,
-            profissao: profissao,
-            newsletter: newsletter
-        },
-        {where: { id: id }}
+        {name: nome,profissao: profissao,newsletter: newsletter},{where: { id: id }}
     );
 
     // Redireciona para a página inicial após a atualização.
