@@ -9,8 +9,7 @@
     --color-dark2: #1e1e1e;
     --color-purple1: #9333ff;
     --color-purple2: #4b0082;
-    --color-input: ;
-    --color-input-hover: ;
+
 }
 main{
     height: 100vh;
@@ -107,4 +106,14 @@ textarea {
     border: 0;
     color: white;
     outline: 0;
+}
+.checkbox{
+    display: flex;
+    align-items: center;
+}
+.checkbox .check{
+    margin-right:10px;
+}
+.checkbox label{
+    color: white;
 }

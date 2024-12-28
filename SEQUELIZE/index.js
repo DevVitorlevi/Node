@@ -33,10 +33,13 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.render('home'); // Renderiza a página inicial usando o template 'home'
 });
+app.get('/users/create',(req,res)=>{
+    res.render("adduser")
+})
 
 // Sincroniza o banco de dados usando o método `sync` do Sequelize.
 // `conn` é a conexão do Sequelize importada de '../db/conn'.
-conn.sync({ force: false }) // Garante que tabelas existentes não serão sobrescritas.
+conn.sync() 
     .then(() => {
         app.listen(4000, () => {
             console.log('Servidor rodando em http://localhost:4000'); // Mensagem de confirmação.
