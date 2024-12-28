@@ -8,7 +8,8 @@ const exphbs = require('express-handlebars');
 
 const conn = require('./db/conn.js')
 
-const User = require('./models/User.js')
+const User = require('./models/User.js');
+const { where } = require('sequelize');
 
 // Cria uma instância da aplicação Express
 const app = express();
@@ -30,8 +31,10 @@ app.use(express.urlencoded({
 app.use(express.json()); 
 
 // Rota para a página inicial, renderiza o template 'home.handlebars'
-app.get('/', (req, res) => {
-    res.render('home'); // Renderiza a página inicial usando o template 'home'
+app.get('/', async(req, res) => {
+    const users =  await User.findAll({raw:true})//findAll é para fazer a consulta e raw é para tranformar os dados em um array
+
+    res.render('home',{users}); // Renderiza a página inicial usando o template 'home'
 });
 app.get('/users/create',(req,res)=>{
     res.render("adduser")
@@ -71,6 +74,48 @@ app.post('/users/create', async(req,res)=>{
     res.redirect('/');
 
 })
+app.get('/user/:id',async (req,res)=>{
+    const id = req.params.id
+
+    const user = await User.findOne({raw:true,where:{id}})
+
+    res.render('user',{user})
+})
+app.post('/user/apagar/:id', async (req,res)=>{
+    const id = req.params.id
+    await User.destroy({where:{id}})
+
+    res.redirect('/')
+})
+app.get('/user/edit/:id', async(req,res)=>{
+    const id = req.params.id
+    const user = await User.findOne({raw:true,where:{id}})
+    res.render('edit',{user})
+})
+app.post('/user/editar', async (req, res) => {
+    // Extrai os valores 'id', 'nome', e 'profissao' do corpo da requisição.
+    const { id, nome, profissao } = req.body;
+
+    // Captura o valor do campo 'newsletter' enviado pelo formulário.
+    let newsletter = req.body.newsletter;
+
+    // Verifica se o checkbox de newsletter foi marcado.
+    newsletter = newsletter === 'on';
+
+    // Atualiza o registro no banco de dados.
+    await User.update(
+        {
+            name: nome,
+            profissao: profissao,
+            newsletter: newsletter
+        },
+        {where: { id: id }}
+    );
+
+    // Redireciona para a página inicial após a atualização.
+    res.redirect('/');
+});
+
 
 // Sincroniza o banco de dados usando o método `sync` do Sequelize.
 // `conn` é a conexão do Sequelize importada de '../db/conn'.

@@ -1,1 +1,24 @@
-<h1>Olá Sequelize</h1>
+        <link rel="stylesheet" href="/arquivos/table.css">
+        <div class="table">
+            <h1 class="table-titulo">Todos Os Usuários Cadastrados</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Profissão</th>
+                        <th>NewsLetter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <td><a href="/user/{{this.id}}">{{this.id}}</a></td>
+                        <td><a href="/user/{{this.id}}">{{this.name}}</a></td>
+                        <td>{{this.profissao}}</td>
+                        <td>{{this.newsletter}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>

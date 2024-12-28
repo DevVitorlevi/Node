@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/arquivos/style.css">
+<main>
+    <div class="container">
+        <h1>Editar Usuário</h1>
+        <form action="/user/editar" method="POST" id="form">
+            <!--Titulo-->
+            <input type="hidden" name="id" value="{{user.id}}">
+            <div class="inputs">
+                <input type="text" name="nome"  class="input required" required value="{{user.name}}">
+                <label>Nome do Usuário</label>
+            </div>
+            <!--Autor-->
+            <div class="inputs">
+                <input type="text" name="profissao"  class="input required" required value="{{user.profissao}}">
+                <label>Profissão</label>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" name="newsletter"  class="check" checked >
+                <label for="newsletter">Envia Promoções?</label>
+            </div>
+
+            <button type="submit" id="button">Cadastrar</button>
+        </form>
+    </div>
+</main>
