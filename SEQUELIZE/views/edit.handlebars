@@ -18,8 +18,45 @@
                 <input type="checkbox" name="newsletter"  class="check" checked >
                 <label for="newsletter">Envia Promoções?</label>
             </div>
-
             <button type="submit" id="button">Cadastrar</button>
         </form>
     </div>
+<div class="container">
+    
+            <h1>Editar Endereço</h1>
+            <form action="/endereco/create" method="POST" id="form">
+                <!--Titulo-->
+                <input type="hidden" name="UserId" value="{{user.id}}">
+                <div class="inputs">
+                    <input type="text" name="rua"  class="input required" required>
+                    <label>Nome da rua</label>
+                </div>
+                <!--Autor-->
+                <div class="inputs">
+                    <input type="text" name="number"  class="input required" required >
+                    <label>Numero da casa</label>
+                </div>
+                <div class="inputs">
+                    <input type="text" name="city"  class="input required" required >
+                    <label>cidade</label>
+                </div>
+                <button type="submit" id="button">Incluir Endereço</button>
+            </form>
+</div>
+
+<div class="container">
+    
+        <div class="list">
+                <h1>Lista de Endereços:</h1>
+            <ul>
+                {{#each user.Endereços}}
+                    <li>{{this.id}} - {{this.rua}} - {{this.number}} -  {{this.city}}</li>
+                    <form action="/endereco/apagar" method="POST">
+                            <input type="hidden" name="id" value="{{this.id}}">
+                            <button type="submit">apagar</button>
+                    </form>
+                {{/each}}
+            </ul>
+        </div>
+</div>
 </main>

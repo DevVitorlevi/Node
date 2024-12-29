@@ -22,7 +22,7 @@ const Endereço = db.define('Endereço', {
         required: true 
     }
 });
-
+User.hasMany(Endereço)
 Endereço.belongsTo(User)// Informa que o relacionamento é 1:1 ou seja 1 endereço vai ter somente 1 usuário, sendo assim criando o UserId
 
 module.exports = Endereço;

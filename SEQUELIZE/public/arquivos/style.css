@@ -17,6 +17,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
 }
 .container {
     background-color: var(--color-dark2);
@@ -115,5 +116,9 @@ textarea {
     margin-right:10px;
 }
 .checkbox label{
+    color: white;
+}
+
+.list{
     color: white;
 }

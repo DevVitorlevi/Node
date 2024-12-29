@@ -9,7 +9,7 @@ const exphbs = require('express-handlebars');
 const conn = require('./db/conn.js')
 
 const User = require('./models/User.js');
-const Endereço = require('./models/Endereço.js');
+const Endereco = require('./models/Endereço.js');
 
 
 // Cria uma instância da aplicação Express
@@ -90,8 +90,8 @@ app.post('/user/apagar/:id', async (req,res)=>{
 })
 app.get('/user/edit/:id', async(req,res)=>{
     const id = req.params.id
-    const user = await User.findOne({raw:true,where:{id}})
-    res.render('edit',{user})
+    const user = await User.findOne({include:Endereco,where:{id}})
+    res.render('edit',{user:user.get({plain:true})})
 })
 app.post('/user/editar', async (req, res) => {
     // Extrai os valores 'id', 'nome', e 'profissao' do corpo da requisição.
@@ -111,8 +111,17 @@ app.post('/user/editar', async (req, res) => {
     // Redireciona para a página inicial após a atualização.
     res.redirect('/');
 });
+app.post('/endereco/create', async(req,res)=>{
+        const {UserId,rua,number,city} = req.body
 
-
+        await Endereco.create({UserId,rua,number,city})
+        res.redirect('/')
+})
+app.post('/endereco/apagar', async(req,res)=>{
+    const id = req.body.id
+        await Endereco.destroy({where:{id:id}})
+        res.redirect('/')
+    })
 // Sincroniza o banco de dados usando o método `sync` do Sequelize.
 // `conn` é a conexão do Sequelize importada de '../db/conn'.
 conn.sync() 
