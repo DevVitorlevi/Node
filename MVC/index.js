@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require("express-handlebars")
 
 const conn = require('./db/conn')
+const Tarefa = require('./models/Tarefa')
 
 const app = express()
 
@@ -14,4 +15,4 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 
-app.listen(3000)
+conn.sync().then(()=>app.listen(3000)).catch((e=>console.log(e)))
