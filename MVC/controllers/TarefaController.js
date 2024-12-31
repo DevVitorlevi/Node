@@ -16,7 +16,14 @@ module.exports = class TarefaController {
 
         res.redirect('/tarefa/todas')
     }
-    static todasTarefas(req,res){
-        res.render('tarefa/todas')
+    static async todasTarefas(req,res){
+        const tarefas =  await Tarefa.findAll({raw:true})
+        res.render('tarefa/todas',{tarefas})
     }
+    static async apagarTarefa(req,res){
+        const id = req.body.id
+        console.log(id)
+        await Tarefa.destroy({where:{id:id}})
+        res.redirect('/tarefa/todas')
+    }       
 }

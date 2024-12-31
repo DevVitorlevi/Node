@@ -1,1 +1,22 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="/arquivos/tarefas.css">
 <h1>Todas As Tarefas</h1>
+{{#each tarefas}}
+    
+<section>
+    <div class="tarefas">
+                <h1>{{this.titulo}}</h1>
+                    <p>{{this.descricao}}</p>
+                    <div class="actions">
+                        <button id="verde"><a href="/"><i class="bi bi-check-lg"></i></a></button>
+                        <form action="/tarefa/apagar/{{this.id}}" method="POST">
+                        <input type="hidden"  name="id" value="{{this.id}}">
+                        <button type="submit" id="vermelho"><i class="bi bi-trash-fill"></i></button>
+                        </form>
+                        <button id="azul"><a href="/"><i class="bi bi-pen-fill"></i></a></button>
+                    </div>
+                
+        </ul>
+    </div>
+        {{/each}}
+</section>
