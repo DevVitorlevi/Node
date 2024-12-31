@@ -15,6 +15,12 @@ router.post('/salvar',TarefaController.salvarTarefa)
 // Define uma rota GET para '/todas', que chama o método 'todasTarefas' do TarefaController
 router.get('/todas', TarefaController.todasTarefas);
 
-router.post('/apagar/:id',TarefaController.apagarTarefa)
+router.post('/apagar',TarefaController.apagarTarefa)
 // Exporta o roteador para que ele possa ser usado no arquivo principal do aplicativo (index.js)
+
+router.get('/editar/:id',TarefaController.editarTarefa)
+
+router.post('/atualizar', TarefaController.atualizarTarefa)
+
+router.post('/statustarefa', TarefaController.atualizarStatus)
 module.exports = router;

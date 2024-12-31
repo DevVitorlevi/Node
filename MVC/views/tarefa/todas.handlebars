@@ -5,15 +5,23 @@
     
 <section>
     <div class="tarefas">
-                <h1>{{this.titulo}}</h1>
+        {{#if this.feita}}
+            <h1 class="done">{{this.titulo}}</h1>
+        {{else}}
+            <h1>{{this.titulo}}</h1>
+        {{/if}}
                     <p>{{this.descricao}}</p>
                     <div class="actions">
-                        <button id="verde"><a href="/"><i class="bi bi-check-lg"></i></a></button>
-                        <form action="/tarefa/apagar/{{this.id}}" method="POST">
+                        <form action="/tarefa/statustarefa" method="POST">
+                        <input type="hidden" name="id" value="{{this.id}}">
+                        <input type="hidden" name="feita" value="{{this.feita}}">
+                            <button id="verde"><i class="bi bi-check-lg"></i></button>
+                            </form>
+                        <form action="/tarefa/apagar" method="POST">
                         <input type="hidden"  name="id" value="{{this.id}}">
                         <button type="submit" id="vermelho"><i class="bi bi-trash-fill"></i></button>
                         </form>
-                        <button id="azul"><a href="/"><i class="bi bi-pen-fill"></i></a></button>
+                        <button id="azul"><a href="/tarefa/editar/{{this.id}}"><i class="bi bi-pen-fill"></i></a></button>
                     </div>
                 
         </ul>
