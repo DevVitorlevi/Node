@@ -89,3 +89,4 @@ module.exports = class TarefaController {
         res.redirect('/tarefa/todas');
     }
 };
+  
