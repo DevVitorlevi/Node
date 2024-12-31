@@ -4,12 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing:border-box ;
+            font-family: "Fjalla One";
+        }
+        body{
+            background-color: whitesmoke;
+
+
+        }
+        header{
+            background-color: rgb(233, 38, 38);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            color: white;
+            
+        }
+        #nav-list {
+            display: flex;
+            gap: 20px;  
+        }
+        #nav-list ul{
+            list-style: none;
+        }
+        #nav-list a{
+            text-decoration: none;
+            font-size: 25px;
+            color: white;
+        }
+    </style>
+
 </head>
+
 <body>
-    <nav id="nav-list">
-        <ul><li><a href="/tarefa/todas">Ver Todas</a></li></ul>
-        <ul><li><a href="/tarefa/criar">Criar Tarefa</a></li></ul>
-    </nav>
+    <header>
+        <h1>TaskVault</h1>
+        <nav id="nav-list">
+            <ul><li><a href="/tarefa/todas">Ver Todas</a></li></ul>
+            <ul><li><a href="/tarefa/criar">Criar Tarefa</a></li></ul>
+        </nav>
+</header>
     {{{body}}}
 </body>
 </html>

@@ -1,21 +1,23 @@
-const express = require('express')
-const exphbs = require("express-handlebars")
+const express = require('express');
+const exphbs = require('express-handlebars');
+const conn = require('./db/conn');
+const Tarefa = require('./models/Tarefa');
+const TarefaRotas = require('./routers/TarefasRotas');
 
-    const conn = require('./db/conn')
-    const Tarefa = require('./models/Tarefa')
-    const TarefaRotas = require('./routers/TarefasRotas')
+const app = express();
 
+// Configuração do Handlebars
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars');
 
+// Middleware para processar dados do corpo da requisição
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-    const app = express()
+// Middleware para servir arquivos estáticos
+app.use(express.static('public'));
 
-    app.use('/tarefa', TarefaRotas)
-    app.engine('handlebars', exphbs.engine()) 
-    app.set('view engine', 'handlebars')
-
-    app.use(express.urlencoded({
-        extended:true
-    }))
-    app.use(express.json())
-
+// Rotas
+app.use('/tarefa', TarefaRotas);
     conn.sync().then(()=>app.listen(3000)).catch((e=>console.log(e)))
+    

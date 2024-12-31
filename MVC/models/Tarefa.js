@@ -16,3 +16,5 @@ const Tarefa = db.define('Tarefa',{
         require:true 
     },
 })
+
+module.exports = Tarefa
