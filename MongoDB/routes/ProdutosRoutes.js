@@ -7,5 +7,7 @@ const router = express.Router();
 const ProdutosController = require('../controller/ProdutosController')
 
 router.get('/', ProdutosController.todosProdutos)
+router.get('/criar', ProdutosController.criarProduto)
+router.post('/adicionar', ProdutosController.adicionarProduto)
 
 module.exports = router
