@@ -30,6 +30,12 @@ class Produto {
     }
     static async removeProduto(id){
         await conn.db().collection('produtos').deleteOne({_id: new ObjectId(id)})
+
+        return
+    }
+    atualizarProduto(id){
+        conn.db().collection('produtos').updateOne({_id: new ObjectId(id)}, {$set:this})
+
         
     }
 }

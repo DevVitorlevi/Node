@@ -41,6 +41,10 @@ module.exports = class ProdutosController {
     }
     static async atualizarProduto(req,res){
         const id = req.body.id
-        
+
+        const {nome,image,preco,descricao} = req.body
+        const data = new Produto(nome,image,preco,descricao)
+        await data.atualizarProduto(id)
+        res.redirect('/')
     }
 }
