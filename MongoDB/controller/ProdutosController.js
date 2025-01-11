@@ -5,7 +5,7 @@ module.exports = class ProdutosController {
         res.render('produtos/home')
     }
     static criarProduto(req,res){
-        res.render('produto/criar')
+        res.render('produtos/criar')
     }
     static async adicionarProduto(req,res){
         const {nome,preco,descricao} = req.body
@@ -13,5 +13,7 @@ module.exports = class ProdutosController {
         const produto = new Produto(nome,preco,descricao)
 
         produto.save()
+
+        res.redirect('/')
     }
 }
