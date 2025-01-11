@@ -39,4 +39,8 @@ module.exports = class ProdutosController {
 
         res.render('produtos/edit', {produto})
     }
+    static async atualizarProduto(req,res){
+        const id = req.body.id
+        
+    }
 }
