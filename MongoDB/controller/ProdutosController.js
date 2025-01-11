@@ -19,4 +19,11 @@ module.exports = class ProdutosController {
 
         res.redirect('/')
     }
+    static async viewProduto(req,res){
+        const id = req.params.id
+
+        const produto = await Produto.getProdutoByID(id)
+
+        res.render('produtos/produto', {produto})
+    }
 }
