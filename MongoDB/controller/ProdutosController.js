@@ -32,4 +32,11 @@ module.exports = class ProdutosController {
 
         res.redirect('/produtos')
     }
+    static async editProduto(req,res){
+        const id = req.params.id
+
+        const produto = await Produto.getProdutoByID(id)
+
+        res.render('produtos/edit', {produto})
+    }
 }
