@@ -1,1 +1,23 @@
-<h1>Produtos</h1>
+<link rel="stylesheet" href="/arquivos/produtos.css">
+<h1>Nossos Produtos</h1>
+
+<section class="Produtos">
+    {{#each produtos}}
+        <div class="card">
+            <div class="content-produto">
+                <div class="card-image"><img src="{{this.image}}"></div>
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>{{this.nome}}</h2>
+                    </div>
+                    <div class="card-desc">
+                        <p>{{this.descricao}}</p>
+                    </div>
+                    <div class="card-price">
+                        <p>R${{this.preco}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</section>
