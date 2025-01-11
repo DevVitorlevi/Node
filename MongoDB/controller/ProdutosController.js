@@ -26,4 +26,10 @@ module.exports = class ProdutosController {
 
         res.render('produtos/produto', {produto})
     }
+    static async removeProduto(req,res){
+        const id = req.params.id
+        await Produto.removeProduto(id)
+
+        res.redirect('/produtos')
+    }
 }

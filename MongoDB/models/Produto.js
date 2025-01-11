@@ -28,6 +28,10 @@ class Produto {
             const produto = await conn.db().collection('produtos').findOne({_id: new ObjectId(id)})
             return produto
     }
+    static async removeProduto(id){
+        await conn.db().collection('produtos').deleteOne({_id: new ObjectId(id)})
+        
+    }
 }
 
 module.exports = Produto
