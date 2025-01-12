@@ -2,7 +2,9 @@ const Produto = require('../models/Produto')
 
 module.exports = class ProdutosController {
     static async todosProdutos(req,res){
-        res.render('produtos/home')
+        const TodosProdutos = await Produto.find().lean()
+
+        res.render('produtos/home',{TodosProdutos})
     }
     static criarProduto(req,res){
         res.render('produtos/criar')
@@ -20,5 +22,6 @@ module.exports = class ProdutosController {
         // Redireciona o cliente para a rota principal ('/')
         res.redirect('/');
     }  
+
 
 }
