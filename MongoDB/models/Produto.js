@@ -1,43 +1,25 @@
-const conn = require('../db/conn')
+// Importa o módulo mongoose para interagir com o MongoDB
+const mongoose = require('mongoose');
 
-const {ObjectId} = require('mongodb')
-class Produto {
-    constructor(nome,image,preco,descricao){
-        this.nome = nome
-        this.image= image
-        this.preco = preco
-        this.descricao = descricao
-    }
+// Desestrutura o Schema do mongoose, que será usado para definir a estrutura dos dados
+const { Schema } = mongoose;
 
-    save(){
-        const produto = conn.db().collection('produtos').insertOne({
-            nome:this.nome,
-            image:this.image,
-            preco:this.preco,
-            descricao:this.descricao
-        })
-        return produto
-    }
+// Define o modelo "Produto" com base em um esquema específico
+const Produto = mongoose.model('Produto', 
+    new Schema({
+        // Define o campo "nome", que é uma string e obrigatório
+        nome: { type: String, required: true },
 
-    static getProdutos(){
-        const produtos = conn.db().collection('produtos').find().toArray()
+        // Define o campo "preco", que também é um Number e obrigatório
+        preco: { type: Number, required: true, min:0 },
 
-        return produtos
-    }
-    static async getProdutoByID(id){
-            const produto = await conn.db().collection('produtos').findOne({_id: new ObjectId(id)})
-            return produto
-    }
-    static async removeProduto(id){
-        await conn.db().collection('produtos').deleteOne({_id: new ObjectId(id)})
+        // Define o campo "descricao", que é uma string e obrigatório
+        descricao: { type: String, required: true },
 
-        return
-    }
-    atualizarProduto(id){
-        conn.db().collection('produtos').updateOne({_id: new ObjectId(id)}, {$set:this})
+        // Define o campo "image", que armazena um caminho ou URL da imagem como string, e é obrigatório
+        image: { type: String, required: true },
+    })
+);
 
-        
-    }
-}
-
-module.exports = Produto
+// Exporta o modelo "Produto" para ser usado em outras partes do projeto
+module.exports = Produto;
