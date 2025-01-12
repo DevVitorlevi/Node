@@ -36,6 +36,18 @@ module.exports = class ProdutosController {
 
         res.render('produtos/edit', {produto})
     }
+    static async atualizarProduto(req,res){
+        const id = req.body.id
+
+        const { nome, image, preco, descricao } = req.body;
+
+        const Data = { nome, image, preco, descricao }
+
+        await Produto.updateOne({_id:id}, Data)
+
+        res.redirect('/')
+    }
     
+
 
 }
