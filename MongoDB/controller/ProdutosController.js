@@ -2,49 +2,23 @@ const Produto = require('../models/Produto')
 
 module.exports = class ProdutosController {
     static async todosProdutos(req,res){
-
-        const produtos = await Produto.getProdutos()
-
-        res.render('produtos/home', {produtos})
+        res.render('produtos/home')
     }
     static criarProduto(req,res){
         res.render('produtos/criar')
     }
-    static async adicionarProduto(req,res){
-        const {nome,image,preco,descricao} = req.body
+    static async adicionarProduto(req, res) {
+        // Extrai os campos 'nome', 'image', 'preco' e 'descricao' do corpo da requisição
+        const { nome, image, preco, descricao } = req.body;
+    
+        // Cria uma nova instância do modelo 'Produto' com os dados recebidos
+        const Produtos = new Produto({ nome, image, preco, descricao });
+    
+        // Salva o novo produto no banco de dados (operações de banco de dados são assíncronas)
+        await Produtos.save();
+    
+        // Redireciona o cliente para a rota principal ('/')
+        res.redirect('/');
+    }  
 
-        const produto = new Produto(nome,image,preco,descricao)
-
-        produto.save()
-
-        res.redirect('/')
-    }
-    static async viewProduto(req,res){
-        const id = req.params.id
-
-        const produto = await Produto.getProdutoByID(id)
-
-        res.render('produtos/produto', {produto})
-    }
-    static async removeProduto(req,res){
-        const id = req.params.id
-        await Produto.removeProduto(id)
-
-        res.redirect('/produtos')
-    }
-    static async editProduto(req,res){
-        const id = req.params.id
-
-        const produto = await Produto.getProdutoByID(id)
-
-        res.render('produtos/edit', {produto})
-    }
-    static async atualizarProduto(req,res){
-        const id = req.body.id
-
-        const {nome,image,preco,descricao} = req.body
-        const data = new Produto(nome,image,preco,descricao)
-        await data.atualizarProduto(id)
-        res.redirect('/')
-    }
 }
