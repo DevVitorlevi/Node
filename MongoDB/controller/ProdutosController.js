@@ -47,7 +47,13 @@ module.exports = class ProdutosController {
 
         res.redirect('/')
     }
-    
+    static async deletarProduto(req,res){
+        const id = req.params.id
+
+        await Produto.deleteOne({_id:id})
+
+        res.redirect('/')
+    }
 
 
 }

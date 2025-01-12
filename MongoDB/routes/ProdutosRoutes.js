@@ -12,5 +12,5 @@ router.post('/adicionar', ProdutosController.adicionarProduto)
 router.get('/:id', ProdutosController.viewProduto)
 router.get('/edit/:id', ProdutosController.editarProduto)
 router.post('/atualizar', ProdutosController.atualizarProduto)
-
+router.post('/remove/:id', ProdutosController.deletarProduto)
 module.exports = router
